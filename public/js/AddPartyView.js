@@ -8,7 +8,7 @@ angular.module('app').controller('AddPartyViewCtrl', function($scope, AddEntityS
 
     $scope.AddEntityClicked = function() {
         if ($scope.model.radioValue === 'Party') {
-            AddEntityService.addEntity(($scope.model.radioValue))
+            AddEntityService.addEntity(($scope.model.text))
         } else {
             alert('other');
         }
