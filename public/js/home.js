@@ -1,8 +1,9 @@
 angular.module('app').controller('HomeCtrl', function($scope) {
-  $scope.greeting = 'World';
+  $scope.greeting = 'Welcome to';
 
   $scope.model = {
-    text: ''
+    text: '',
+    mandat: '0'
   };
 
   $scope.buttonClicked = function() {
