@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-8">
+        <h2>Add New Party</h2>
+
+        <fieldset>
+        <input ng-model="model.radioValue" type="radio" name="EntityRadio" value="Party" checked/>
+        <label>Add Party</label> <br/>
+
+        <input ng-model="model.radioValue" type="radio" id="radioPerson" name="EntityRadio" value="Person" />
+        <label>Add Person to Party</label> <br/>
+
+        <input ng-model="model.radioValue" type="radio" id="radioPW" name="EntityRadio" value="PW" />
+        <label>Add Positive Word</label>
+
+        <br/><br/>
+        <input type="text" >
+
+            <br/><br/>
+                <input type="submit" class="btn btn-primary" ng-model="model.text" ng-click="AddEntityClicked()">
+        </fieldset>
+
+    </div>
+</div>

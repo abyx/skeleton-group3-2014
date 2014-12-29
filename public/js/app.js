@@ -6,9 +6,9 @@ angular.module('app').config(function($routeProvider) {
       templateUrl: 'home.html',
       controller: 'HomeCtrl'
     })
-    .when('/view1/:argument?', {
-      templateUrl: 'view1.html',
-      controller: 'View1Ctrl'
+    .when('/AddPartyView/:argument?', {
+      templateUrl: 'AddPartyView.html',
+      controller: 'AddPartyViewCtrl'
     })
     .when('/view2', {
       templateUrl: 'view2.html',
