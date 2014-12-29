@@ -1,5 +1,35 @@
+<div dir="rtl">
 <div class="row">
     <div class="col-md-8">
-        <h2>This is another placeholder</h2>
+        <h1 class="page-header">מסך תוצאות</h1>
     </div>
+</div>
+
+
+<div class="row" dir="rtl">
+    <label class="col-md-8">
+    <div class="col-md-2">
+        <input class="form-control" type="text" ng-model="model.text">
+    </div>
+    <div class="col-md-3">
+        <p>הזן את שם המפלגה:</p>
+    </div>
+    </label>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary" ng-click="buttonClicked()">הצג כמות מנדטים</button>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-3" ng-model="model.mandat">
+
+        <p>{{model.mandat}}</p>
+    </div>
+</div>
 </div>
