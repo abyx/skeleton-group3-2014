@@ -1,4 +1,4 @@
-angular.module('app').controller('AddPartyViewCtrl', function($scope, AddEntityService ) {
+angular.module('app').controller('AddPartyViewCtrl', function($scope, AddEntityService, PartiesSrv ) {
   // Nothing here for now
 
     $scope.model = {
@@ -6,12 +6,18 @@ angular.module('app').controller('AddPartyViewCtrl', function($scope, AddEntityS
         radioValue:''
     };
 
-    $scope.AddEntityClicked = function() {
-        if ($scope.model.radioValue === 'Party') {
-            AddEntityService.addEntity(($scope.model.text));
-        } else {
-            alert('other');
-        }
+    $scope.parties = [];
+
+    PartiesSrv.getAll().then(
+        function(response){
+            $scope.parties = response;
+        },
+        function(error){
+            console.log('error');
+        });
+
+    $scope.AddParty = function() {
+        AddEntityService.addEntity(($scope.model.text));
     };
 
 });

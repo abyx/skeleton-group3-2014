@@ -11,8 +11,15 @@ var db;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/party/:id', function(request, response)
-{
+app.get('/parties/', function(request, response) {
+  console.log('SERVER get parties');
+  response.send([
+    {name:'ליכוד', members: ['member1','member2','member3']},
+    {name: 'עבודה', members: ['member4','member5']}
+  ]);
+});
+
+app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
 
   TwitterService(request.params.id);
@@ -76,7 +83,7 @@ function TwitterService(partyName)
     }
 
     console.log(params);  // The favorites.
-
+    
     console.log(response);  // Raw response object.
 
     console.log('SERVER out TwitterService()');
