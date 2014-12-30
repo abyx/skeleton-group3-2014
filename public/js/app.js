@@ -10,9 +10,9 @@ angular.module('app').config(function($routeProvider) {
       templateUrl: 'AddPartyView.html',
       controller: 'AddPartyViewCtrl'
     })
-    .when('/view2', {
-      templateUrl: 'view2.html',
-      controller: 'View2Ctrl'
+    .when('/forecast', {
+      templateUrl: 'forecast.html',
+      controller: 'ForecastCtrl'
     })
     .otherwise({redirectTo: '/'});
 });

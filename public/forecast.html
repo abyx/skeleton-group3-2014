@@ -1,0 +1,45 @@
+<div>
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="page-header">Party Mandats forecast</h1>
+    </div>
+</div>
+
+
+<div class="row" >
+    <label class="col-md-8">
+        <div class="col-md-3">
+            <p>Enter party name:</p>
+        </div>
+    <div class="col-md-2">
+        <input class="form-control" type="text" ng-model="model.text">
+    </div>
+    </label>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary" ng-click="buttonClicked()">Display Forecast</button>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-8" ng-model="model.mandat">
+        <nvd3 options="options" data="data"></nvd3>
+    </div>
+      <div class="col-md-3" ng-model="model.mandat">
+        <nvd3 options="optionsBar" data="dataBar"></nvd3>
+      </div>
+</div>
+    <div class="row" ng-show=visible>
+        <div class="col-md-8" ng-model="model.mandat" align="center" >
+            Party mandats over time
+        </div>
+        <div class="col-md-3" ng-model="model.mandat" align="center">
+            Mandats Avg.
+        </div>
+    </div>
+</div>
