@@ -10,7 +10,7 @@ var db;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/example', function(request, response) {
+app.get('/party/:id', function(request, response) {
   response.send({success: true});
 });
 
