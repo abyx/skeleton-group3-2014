@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div>
 <div class="row">
     <div class="col-md-8">
         <h1 class="page-header">מסך תוצאות</h1>
@@ -6,7 +6,7 @@
 </div>
 
 
-<div class="row" dir="rtl">
+<div class="row" >
     <label class="col-md-8">
     <div class="col-md-2">
         <input class="form-control" type="text" ng-model="model.text">
@@ -27,7 +27,9 @@
 
 <div class="row">
 
-    <div class="col-md-3" ng-model="model.mandat">
+    <div class="col-md-8" ng-model="model.mandat">
+
+        <nvd3 options="options" data="data"></nvd3>
 
         <p>{{model.mandat}}</p>
     </div>

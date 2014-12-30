@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute']);
+angular.module('app', ['ngRoute','nvd3']);
 
 angular.module('app').config(function($routeProvider) {
   $routeProvider
