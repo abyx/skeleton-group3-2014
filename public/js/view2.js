@@ -4,7 +4,8 @@ angular.module('app').controller('View2Ctrl', function($scope,statisticSrv) {
 
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat){
-                $scope.model.mandat = mandat}
+                $scope.model.mandat = mandat
+                console.log(mandat);}
         );
 
     };

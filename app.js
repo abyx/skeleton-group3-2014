@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
-  response.send({success: true});
+  response.send('10');
 });
 
-app.post('/party/', function(request, response) {
+app.post('/party', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
   //console.log(request.params.id);
