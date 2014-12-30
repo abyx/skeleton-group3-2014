@@ -2,10 +2,16 @@
  * Created by 012-user on 12/29/2014.
  */
 
-angular.module('app').factory('statisticSrv', function($q) {
+angular.module('app').factory('statisticSrv', function($http) {
     return {
         getMandatsNo4Party: function(partyName) {
-        return $q.when(partyName + ' 10 ');
+            return $http.get('/party/'+partyName).then(
+                function(response)
+                {
+                    return response.data;
+
+                }
+            )
         }
     }
     });
