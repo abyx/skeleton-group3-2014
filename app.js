@@ -11,11 +11,15 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/party/:id', function(request, response) {
+  console.log('SERVER get');
   response.send({success: true});
 });
 
-app.post('/example/:id', function(request, response) {
-  console.log(request.body, request.params.id, 'query', request.query);
+app.post('/party/', function(request, response) {
+  console.log('SERVER post');
+  console.log(request.body);
+  //console.log(request.params.id);
+  //console.log(request.body, request.params.id, 'query');
   response.sendStatus(200);
 });
 
