@@ -114,7 +114,7 @@ function $RouteProvider() {
    *        and the return value is treated as the dependency. If the result is a promise, it is
    *        resolved before its value is injected into the controller. Be aware that
    *        `ngRoute.$routeParams` will still refer to the previous route within these resolve
-   *        functions.  Use `$route.current.params` to access the new route parameters, instead.
+   *        functions.  Use `$route.current.twitterQueryParams` to access the new route parameters, instead.
    *
    *    - `redirectTo` – {(string|function())=} – value to update
    *      {@link ng.$location $location} path with and trigger route redirection.
@@ -146,7 +146,7 @@ function $RouteProvider() {
    * Adds a new route definition to the `$route` service.
    */
   this.when = function(path, route) {
-    //copy original route object to preserve params inherited from proto chain
+    //copy original route object to preserve twitterQueryParams inherited from proto chain
     var routeCopy = angular.copy(route);
     if (angular.isUndefined(routeCopy.reloadOnSearch)) {
       routeCopy.reloadOnSearch = true;
@@ -308,7 +308,7 @@ function $RouteProvider() {
      *
      *       <pre>$location.path() = {{$location.path()}}</pre>
      *       <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
-     *       <pre>$route.current.params = {{$route.current.params}}</pre>
+     *       <pre>$route.current.twitterQueryParams = {{$route.current.twitterQueryParams}}</pre>
      *       <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
      *       <pre>$routeParams = {{$routeParams}}</pre>
      *     </div>
@@ -316,13 +316,13 @@ function $RouteProvider() {
      *
      *   <file name="book.html">
      *     controller: {{name}}<br />
-     *     Book Id: {{params.bookId}}<br />
+     *     Book Id: {{twitterQueryParams.bookId}}<br />
      *   </file>
      *
      *   <file name="chapter.html">
      *     controller: {{name}}<br />
-     *     Book Id: {{params.bookId}}<br />
-     *     Chapter Id: {{params.chapterId}}
+     *     Book Id: {{twitterQueryParams.bookId}}<br />
+     *     Chapter Id: {{twitterQueryParams.chapterId}}
      *   </file>
      *
      *   <file name="script.js">
@@ -336,12 +336,12 @@ function $RouteProvider() {
      *
      *      .controller('BookController', function($scope, $routeParams) {
      *          $scope.name = "BookController";
-     *          $scope.params = $routeParams;
+     *          $scope.twitterQueryParams = $routeParams;
      *      })
      *
      *      .controller('ChapterController', function($scope, $routeParams) {
      *          $scope.name = "ChapterController";
-     *          $scope.params = $routeParams;
+     *          $scope.twitterQueryParams = $routeParams;
      *      })
      *
      *     .config(function($routeProvider, $locationProvider) {
@@ -480,7 +480,7 @@ function $RouteProvider() {
            * current route parameters with those specified in `newParams`.
            * Provided property names that match the route's path segment
            * definitions will be interpolated into the location's path, while
-           * remaining properties will be treated as query params.
+           * remaining properties will be treated as query twitterQueryParams.
            *
            * @param {Object} newParams mapping of URL parameter names to values
            */
@@ -492,7 +492,7 @@ function $RouteProvider() {
                 if (!self.current.pathParams[key]) searchParams[key] = newParams[key];
               });
 
-              newParams = angular.extend({}, this.current.params, newParams);
+              newParams = angular.extend({}, this.current.twitterQueryParams, newParams);
               $location.path(interpolate(this.current.$$route.originalPath, newParams));
               $location.search(angular.extend({}, $location.search(), searchParams));
             }
@@ -563,7 +563,7 @@ function $RouteProvider() {
       var nextRoute = preparedRoute;
 
       if (preparedRouteIsUpdateOnly) {
-        lastRoute.params = nextRoute.params;
+        lastRoute.params = nextRoute.twitterQueryParams;
         angular.copy(lastRoute.params, $routeParams);
         $rootScope.$broadcast('$routeUpdate', lastRoute);
       } else if (nextRoute || lastRoute) {
@@ -572,7 +572,7 @@ function $RouteProvider() {
         if (nextRoute) {
           if (nextRoute.redirectTo) {
             if (angular.isString(nextRoute.redirectTo)) {
-              $location.path(interpolate(nextRoute.redirectTo, nextRoute.params)).search(nextRoute.params)
+              $location.path(interpolate(nextRoute.redirectTo, nextRoute.twitterQueryParams)).search(nextRoute.twitterQueryParams)
                        .replace();
             } else {
               $location.url(nextRoute.redirectTo(nextRoute.pathParams, $location.path(), $location.search()))
@@ -594,11 +594,11 @@ function $RouteProvider() {
 
               if (angular.isDefined(template = nextRoute.template)) {
                 if (angular.isFunction(template)) {
-                  template = template(nextRoute.params);
+                  template = template(nextRoute.twitterQueryParams);
                 }
               } else if (angular.isDefined(templateUrl = nextRoute.templateUrl)) {
                 if (angular.isFunction(templateUrl)) {
-                  templateUrl = templateUrl(nextRoute.params);
+                  templateUrl = templateUrl(nextRoute.twitterQueryParams);
                 }
                 templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                 if (angular.isDefined(templateUrl)) {
@@ -617,7 +617,7 @@ function $RouteProvider() {
             if (nextRoute == $route.current) {
               if (nextRoute) {
                 nextRoute.locals = locals;
-                angular.copy(nextRoute.params, $routeParams);
+                angular.copy(nextRoute.twitterQueryParams, $routeParams);
               }
               $rootScope.$broadcast('$routeChangeSuccess', nextRoute, lastRoute);
             }
@@ -686,14 +686,14 @@ ngRouteModule.provider('$routeParams', $RouteParamsProvider);
  * {@link ng.$location#search `search()`} and {@link ng.$location#path `path()`}.
  * The `path` parameters are extracted when the {@link ngRoute.$route `$route`} path is matched.
  *
- * In case of parameter name collision, `path` params take precedence over `search` params.
+ * In case of parameter name collision, `path` twitterQueryParams take precedence over `search` twitterQueryParams.
  *
  * The service guarantees that the identity of the `$routeParams` object will remain unchanged
  * (but its properties will likely change) even when a route change occurs.
  *
  * Note that the `$routeParams` are only updated *after* a route change completes successfully.
  * This means that you cannot rely on `$routeParams` being correct in route resolve functions.
- * Instead you can use `$route.current.params` to access the new route's parameters.
+ * Instead you can use `$route.current.twitterQueryParams` to access the new route's parameters.
  *
  * @example
  * ```js
@@ -764,7 +764,7 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
 
           <pre>$location.path() = {{main.$location.path()}}</pre>
           <pre>$route.current.templateUrl = {{main.$route.current.templateUrl}}</pre>
-          <pre>$route.current.params = {{main.$route.current.params}}</pre>
+          <pre>$route.current.twitterQueryParams = {{main.$route.current.twitterQueryParams}}</pre>
           <pre>$routeParams = {{main.$routeParams}}</pre>
         </div>
       </file>
@@ -772,15 +772,15 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
       <file name="book.html">
         <div>
           controller: {{book.name}}<br />
-          Book Id: {{book.params.bookId}}<br />
+          Book Id: {{book.twitterQueryParams.bookId}}<br />
         </div>
       </file>
 
       <file name="chapter.html">
         <div>
           controller: {{chapter.name}}<br />
-          Book Id: {{chapter.params.bookId}}<br />
-          Chapter Id: {{chapter.params.chapterId}}
+          Book Id: {{chapter.twitterQueryParams.bookId}}<br />
+          Chapter Id: {{chapter.twitterQueryParams.chapterId}}
         </div>
       </file>
 
@@ -851,11 +851,11 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
           }])
           .controller('BookCtrl', ['$routeParams', function($routeParams) {
             this.name = "BookCtrl";
-            this.params = $routeParams;
+            this.twitterQueryParams = $routeParams;
           }])
           .controller('ChapterCtrl', ['$routeParams', function($routeParams) {
             this.name = "ChapterCtrl";
-            this.params = $routeParams;
+            this.twitterQueryParams = $routeParams;
           }]);
 
       </file>

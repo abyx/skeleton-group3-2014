@@ -350,7 +350,7 @@ function forEachSorted(obj, iterator, context) {
 
 
 /**
- * when using forEach the params are value, key, but it is often useful to have key, value.
+ * when using forEach the twitterQueryParams are value, key, but it is often useful to have key, value.
  * @param {function(string, *)} iteratorFn
  * @returns {function(*, string)}
  */
@@ -9100,7 +9100,7 @@ function $HttpProvider() {
      * - [JSON vulnerability](http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx)
      * - [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery)
      *
-     * Both server and the client must cooperate in order to eliminate these threats. Angular comes
+     * Both server and the twitterClient must cooperate in order to eliminate these threats. Angular comes
      * pre-configured with strategies that address these issues, but for this to work backend server
      * cooperation is required.
      *
@@ -9155,7 +9155,7 @@ function $HttpProvider() {
      *
      *    - **method** – `{string}` – HTTP method (e.g. 'GET', 'POST', etc)
      *    - **url** – `{string}` – Absolute or relative URL of the resource that is being requested.
-     *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be turned
+     *    - **twitterQueryParams** – `{Object.<string|Object>}` – Map of strings or objects which will be turned
      *      to `?key1=value1&key2=value2` after the url. If the value is not a string, it will be
      *      JSONified.
      *    - **data** – `{string|Object}` – Data to be sent as the request message data.
@@ -9568,7 +9568,7 @@ function $HttpProvider() {
           cache,
           cachedResp,
           reqHeaders = config.headers,
-          url = buildUrl(config.url, config.params);
+          url = buildUrl(config.url, config.twitterQueryParams);
 
       $http.pendingRequests.push(config);
       promise.then(removePendingReq, removePendingReq);
@@ -9804,7 +9804,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
           // browsers implementing the responseType
           //
           // The json response type can be ignored if not supported, because JSON payloads are
-          // parsed on the client-side regardless.
+          // parsed on the twitterClient-side regardless.
           if (responseType !== 'json') {
             throw e;
           }
@@ -10974,7 +10974,7 @@ var locationPrototype = {
    * // $location.search() => {foo: 'yipee', baz: 'xoxo'}
    * ```
    *
-   * @param {string|Object.<string>|Object.<Array.<string>>} search New search params - string or
+   * @param {string|Object.<string>|Object.<Array.<string>>} search New search twitterQueryParams - string or
    * hash object.
    *
    * When called with a single argument the method acts as a setter, setting the `search` component
@@ -15275,7 +15275,7 @@ function $SceDelegateProvider() {
  * bindings.  (HTML is just one example of a context where rendering user controlled input creates
  * security vulnerabilities.)
  *
- * For the case of HTML, you might use a library, either on the client side, or on the server side,
+ * For the case of HTML, you might use a library, either on the twitterClient side, or on the server side,
  * to sanitize unsafe HTML before binding to the value and rendering it in the document.
  *
  * How would you ensure that every place that used these types of bindings was bound to a value that
@@ -16302,7 +16302,7 @@ var originUrl = urlResolve(window.location.href);
  *   | href          | A normalized version of the provided URL if it was not an absolute URL |
  *   | protocol      | The protocol including the trailing colon                              |
  *   | host          | The host and port (if the port is non-default) of the normalizedUrl    |
- *   | search        | The search params, minus the question mark                             |
+ *   | search        | The search twitterQueryParams, minus the question mark                             |
  *   | hash          | The hash string, minus the hash symbol
  *   | hostname      | The hostname
  *   | port          | The port, without ":"
@@ -16809,7 +16809,7 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatc
          expect(element(by.id('currency-no-fractions')).getText()).toBe('USD$1,235');
        });
        it('should update', function() {
-         if (browser.params.browser == 'safari') {
+         if (browser.twitterQueryParams.browser == 'safari') {
            // Safari does not understand the minus key. See
            // https://github.com/angular/protractor/issues/481
            return;
@@ -18455,7 +18455,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  *
  * # Submitting a form and preventing the default action
  *
- * Since the role of forms in client-side Angular applications is different than in classical
+ * Since the role of forms in twitterClient-side Angular applications is different than in classical
  * roundtrip apps, it is desirable for the browser not to translate the form submission into a full
  * page reload that sends the data to the server. Instead some javascript logic should be triggered
  * to handle the form submission in an application-specific way.
@@ -20345,7 +20345,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
     </file>
     <file name="protractor.js" type="protractor">
     it('should data-bind and become invalid', function() {
-      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
+      if (browser.twitterQueryParams.browser == 'safari' || browser.twitterQueryParams.browser == 'firefox') {
         // SafariDriver can't handle contenteditable
         // and Firefox driver can't clear contenteditables very well
         return;
@@ -22850,7 +22850,7 @@ var ngControllerDirective = [function() {
           // For now, we only test on Chrome,
           // as Safari does not load the page with Protractor's injected scripts,
           // and Firefox webdriver always disables content security policy (#6358)
-          if (browser.params.browser !== 'chrome') {
+          if (browser.twitterQueryParams.browser !== 'chrome') {
             return;
           }
 
@@ -23613,7 +23613,7 @@ var ngIfDirective = ['$animate', function($animate) {
       });
 
       it('should load template2.html', function() {
-        if (browser.params.browser == 'firefox') {
+        if (browser.twitterQueryParams.browser == 'firefox') {
           // Firefox can't handle using selects
           // See https://github.com/angular/protractor/issues/480
           return;
@@ -23624,7 +23624,7 @@ var ngIfDirective = ['$animate', function($animate) {
       });
 
       it('should change to blank', function() {
-        if (browser.params.browser == 'firefox') {
+        if (browser.twitterQueryParams.browser == 'firefox') {
           // Firefox can't handle using selects
           return;
         }
