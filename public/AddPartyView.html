@@ -1,8 +1,34 @@
 <div class="row">
     <div class="col-md-8">
-        <h2>Add New Party</h2>
+        <h2>Manage Parties</h2>
+        </div>
+    </div>
 
-        <fieldset>
+<div class="row">
+            <div class="col-md-4">
+            <h3>Parties</h3>
+
+            <span ng-repeat="party    in	parties">
+                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
+                    <lu>
+                        <li class="LIST-GROUP-ITEM" ng-repeat="member in party.members">
+                            {{member}}
+                        </li>
+                    </lu>
+            </span>
+            </div>
+            <!--div class="col-md-4">
+
+            <h3>Adjectives</h3>
+
+            <span ng-repeat="party    in	parties">
+                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
+            </span>
+            </div-->
+</div>
+<br/>
+<div class="row">
+        <!--fieldset>
         <input ng-model="model.radioValue" type="radio" name="EntityRadio" value="Party" checked/>
         <label>Add Party</label> <br/>
 
@@ -13,11 +39,17 @@
         <label>Add Positive Word</label>
 
         <br/><br/>
-        <input type="text" ng-model="model.text">
 
-        <br/><br/>
-                <input type="submit" class="btn btn-primary"  ng-click="AddEntityClicked()">
-        </fieldset>
 
-    </div>
+        </fieldset-->
+
+    <input type="text" ng-model="model.text">
+    <br/><br/>
+
+    <input type="submit" value="Add Party" class="btn btn-primary"  ng-click="AddParty()">
+    <input type="submit" value="Add Person to selected Party" class="btn btn-primary"  ng-click="AddPerson()">
+    <input type="submit" value="Add Adj. to Search By" class="btn btn-primary"  ng-click="AddWord()">
+
+</div>
+
 </div>

@@ -10,6 +10,14 @@ var db;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+app.get('/parties/', function(request, response) {
+  console.log('SERVER get parties');
+  response.send([
+    {name:'ליכוד', members: ['member1','member2','member3']},
+    {name: 'עבודה', members: ['member4','member5']}
+  ]);
+});
+
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
   response.send('10');
