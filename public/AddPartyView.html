@@ -4,10 +4,9 @@
         </div>
     </div>
 
-<div class="row">
-            <div class="col-md-4">
+<div class="row" >
+                <div class="col-md-4">
             <h3>Parties</h3>
-
             <ul ng-repeat="party    in	parties">
                 <li>
                     <input type="checkbox" value="{{party.name}}" ng-model="party.isChecked">{{party.name}}<br/>
@@ -19,14 +18,13 @@
                 </li>
             </ul>
             </div>
-            <!--div class="col-md-4">
+            <div class="col-md-4">
 
             <h3>Adjectives</h3>
-
-            <span ng-repeat="party    in	parties">
-                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
-            </span>
-            </div-->
+                <ul ng-repeat="word    in	words">
+                    <li>{{word.word}}</li>
+                </ul>
+            </div>
 </div>
 <br/>
 <div class="row">

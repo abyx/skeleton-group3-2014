@@ -87,6 +87,8 @@ app.post('/party', function(request, response) {
 
     var savedParty = result.ops[0];
     console.log(savedParty);
+    response.send(savedParty);
+
   });
 });
 
@@ -111,10 +113,8 @@ app.post('/party', function(request, response) {
           console.log('error on insert party to db');
           return;
         }
-        console.log("updated successfully", result);
-        //var savedParty = result.ops[0];
-        //console.log(savedParty);
-
+        response.sendStatus(200);
+        console.log("updated successfully");
       });
       } else
       {
@@ -124,7 +124,7 @@ app.post('/party', function(request, response) {
 
     //console.log(request.twitterQueryParams.id);
     //console.log(request.body, request.twitterQueryParams.id, 'query');
-    response.sendStatus(200);
+
   });
 
 
