@@ -13,10 +13,23 @@ app.use(bodyParser.json());
 
 app.get('/parties/', function(request, response) {
   console.log('SERVER get parties');
+  db.collection('Parties').find().toArray(function	(err,	completedParties)	{
+    if	(err)	{
+      console.log('SERVER get parties error');
+      //	handle	error
+      return;
+    }
+    response.send(completedParties);
+
+  });
+
+
+/*
   response.send([
     {name:'ליכוד', members: ['member1','member2','member3']},
     {name: 'עבודה', members: ['member4','member5']}
   ]);
+  */
 });
 
 app.get('/party/:id', function(request, response) {
