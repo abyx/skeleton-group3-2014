@@ -53,6 +53,17 @@ app.post('/word', function(request, response) {
   response.sendStatus(200);
 });
 
+Q.ninvoke(db.collection('Words').find({}),'toArray').then(
+    function(collection)	{
+      console.log('read words', collection);
+    })
+    .fail(
+    function(err)	{
+      consol.log(err);
+    });
+
+
+
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {
     throw err;
