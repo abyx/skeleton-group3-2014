@@ -13,18 +13,65 @@ app.use(bodyParser.json());
 
 app.get('/parties/', function(request, response) {
   console.log('SERVER get parties');
+  db.collection('Parties').find().toArray(function	(err,	completedParties)	{
+    if	(err)	{
+      console.log('SERVER get parties error');
+      //	handle	error
+      return;
+    }
+    console.log(completedParties);
+    response.send(completedParties);
+
+  });
+
+
+/*
   response.send([
     {name:'ליכוד', members: ['member1','member2','member3']},
     {name: 'עבודה', members: ['member4','member5']}
   ]);
+  */
 });
 
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
+  console.log(request.params.id);
 
-  TwitterService(request.params.id);
+  //TwitterService(request.params.id);
+  db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
+    if (err) {
+      console.log('SERVER get parties error');
+      //	handle	error
+      response.sendStatus(200).send();
+      return;
+    }
+    if (completedParties == null || completedParties.length == 0) {
+      response.sendStatus(200).send();
+    }
+    else {
+      console.log(completedParties);
+      console.log(completedParties[0].count);
+      response.send(completedParties[0].count);
+    }
+  });
 
-  response.send('10');
+});
+
+
+app.get('/words/', function(request, response) {
+  console.log('get words');
+
+Q.ninvoke(db.collection('Words').find({}),'toArray').then(
+    function(collection)	{
+
+      console.log('read words', collection);
+      response.send(collection);
+    })
+    .fail(
+    function(err)	{
+      response.send(err);
+      console.log(err);
+    });
 });
 
 app.post('/party', function(request, response) {
@@ -100,12 +147,21 @@ app.post('/party', function(request, response) {
 });
 
 
-mongo.connect('mongodb://localhost/app', function(err, aDb) {
+
+
+
+
+
+
+
+mongo.connect('mongodb://192.168.100.36/app', function(err, aDb) {
   if (err) {
     throw err;
   }
 
   db = aDb;
+
+
 
   var server = app.listen(3000, function() {
     var host = server.address().address;
