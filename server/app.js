@@ -1,15 +1,30 @@
 var Q = require('q');
-
+var twitter = require('./twitterService');
 var mongo = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var express = require('express');
 var bodyParser = require('body-parser');
+var db ;
 var app = express();
 
-var db ;
-
-app.use(express.static('public'));
+app.use(express.static('client'));
 app.use(bodyParser.json());
+mongo.connect('mongodb://192.168.100.36/app', function(err, aDb)
+{
+	if (err)
+	{
+		throw err;
+	}
+
+	db = aDb;
+
+	var server = app.listen(3000, function()
+	{
+		var host = server.address().address;
+		var port = server.address().port;
+		console.log(' [*] Listening at http://%s:%s', host, port);
+	});
+});
 
 app.get('/parties/', function(request, response) {
   console.log('SERVER get parties');
@@ -23,21 +38,13 @@ app.get('/parties/', function(request, response) {
     response.send(completedParties);
 
   });
-
-
-/*
-  response.send([
-    {name:'ליכוד', members: ['member1','member2','member3']},
-    {name: 'עבודה', members: ['member4','member5']}
-  ]);
-  */
 });
 
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
   console.log(request.params.id);
 
-  //TwitterService(request.params.id);
+  //getTweetsRelatedTo(request.params.id);
   db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
     if (err) {
       console.log('SERVER get parties error');
@@ -61,12 +68,11 @@ app.get('/party/:id', function(request, response) {
 
 });
 
-
 app.get('/partyforgraph/:id', function(request, response) {
   console.log('SERVER get');
   console.log(request.params.id);
 
-  //TwitterService(request.params.id);
+  //getTweetsRelatedTo(request.params.id);
   db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
     if (err) {
       console.log('SERVER get parties error');
@@ -85,7 +91,6 @@ app.get('/partyforgraph/:id', function(request, response) {
   });
 
 });
-
 
 app.get('/words/', function(request, response) {
   console.log('get words');
@@ -121,7 +126,7 @@ app.post('/party', function(request, response) {
   });
 });
 
-  app.post('/person', function(request, response) {
+app.post('/person', function(request, response) {
     console.log('SERVER post');
     console.log(request.body);
 
@@ -156,8 +161,7 @@ app.post('/party', function(request, response) {
 
   });
 
-
-  app.post('/word', function(request, response) {
+app.post('/word', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
 
@@ -175,73 +179,5 @@ app.post('/party', function(request, response) {
   response.sendStatus(200);
 });
 
-
-
-
-
-
-
-
-
-mongo.connect('mongodb://192.168.100.36/app', function(err, aDb) {
-  if (err) {
-    throw err;
-  }
-
-  db = aDb;
-
-
-
-  var server = app.listen(3000, function() {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log(' [*] Listening at http://%s:%s', host, port);
-  });
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-var Twitter = require('twitter');
-
-var twitterClient = new Twitter({
-  consumer_key: 'o1VI2rlZToVRih3cEK45IHslg',
-  consumer_secret: 'OTFoVxvMbCKIf0W9Cr49cxCjjiP45hQEdnozijSWv9287cXJgq',
-  access_token_key: '2951059721-t8chP01k7IA2ODE7g12M17PzfqVIyJqR3GyLWVf',
-  access_token_secret: '6G0rjNt171Yh8jE5whEDxQcKs6U9YV81ekC1pnZNynDXo'
-});
-
-var twitterQueryParams =
-{
-  q: 'github.com/',
-  //since: datestring(),
-  result_type: 'mixed'
-};
-
-function TwitterService(partyName)
-{
-  console.log('SERVER in TwitterService()');
-
-  twitterQueryParams.q = partyName;
-
-  twitterClient.get('search/tweets', twitterQueryParams, function(error, params, response){
-
-    if(error)
-    {
-      console.log('twitter error');
-      throw error;
-    }
-
-    console.log(params);  // The favorites.
-
-    console.log(response);  // Raw response object.
-
-    //console.log(response);  // Raw response object.
-
-    console.log('SERVER out TwitterService()');
-//    response.send('10');
-  });
-}
-
-
-
+// example for how to get tweets related to ..
+//twitter.getTweetsRelatedTo("bibi netanyahu");
