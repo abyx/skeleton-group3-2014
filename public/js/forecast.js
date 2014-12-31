@@ -19,7 +19,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
 
     /* Random Data Generator (took from nvd3.org) */
-
+/*
     function sine() {
         var sin = [];
         var now =+new Date();
@@ -29,20 +29,23 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
         }
 
         return sin;
-    }
+    }*/
 
-    function volatileChart(startPrice, volatility, numPoints) {
+
+    function volatileChart(startPrice, volatility, tweets) {
+
         var rval =  [];
-        var now =+new Date();
-        numPoints = numPoints || 100;
-        for(var i = 1; i < numPoints; i++) {
 
+
+        for(var i = 0; i < tweets.length; i++) {
+            var now =tweets[i].time;
             rval.push({x: now + i * 1000 * 60 * 60 * 24, y: startPrice});
-            var rnd = Math.random();
+            var rnd = tweets[i].count;
             var changePct = 2 * volatility * rnd;
             if ( changePct > volatility) {
                 changePct -= (2*volatility);
             }
+
             startPrice = startPrice + startPrice * changePct;
         }
         return rval;
@@ -79,10 +82,8 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
     // Botton Click
     $scope.buttonClicked = function() {
-
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat) {
-                $scope.data = volatileChart(130.0, 0.02);
                 $scope.dataBar = [
                     {
                         key: "Mandats",
@@ -92,9 +93,22 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
                                 "value": mandat
                             }]
                     }];
-                $scope.visible = true;
+
             }
-        )}
+        )
+
+        statisticSrv.getMandatsNo4PartyGraph($scope.model.text).then(
+
+            function(tweets) {
+                $scope.data = volatileChart(130.0, 0.02,tweets);
+
+
+            }
+        )
+        $scope.visible = true;
+
+
+    }
 
 });
 

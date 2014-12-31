@@ -50,8 +50,37 @@ app.get('/party/:id', function(request, response) {
     }
     else {
       console.log(completedParties);
-      console.log(completedParties[0].count);
-      response.send(completedParties[0].count);
+      var sum = 0;
+      for(var i=0; i< completedParties.length; i++){
+        sum = sum + completedParties[i].count;
+      }
+      //console.log(completedParties[0].count);
+      response.send(sum.toString());
+    }
+  });
+
+});
+
+
+app.get('/partyforgraph/:id', function(request, response) {
+  console.log('SERVER get');
+  console.log(request.params.id);
+
+  //TwitterService(request.params.id);
+  db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
+    if (err) {
+      console.log('SERVER get parties error');
+      //	handle	error
+      response.sendStatus(200).send();
+      return;
+    }
+    if (completedParties == null || completedParties.length == 0) {
+      response.sendStatus(200).send();
+    }
+    else {
+      console.log(completedParties);
+      //console.log(completedParties[0].count);
+      response.send(completedParties);
     }
   });
 
