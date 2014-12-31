@@ -30,6 +30,18 @@ app.get('/party/:id', function(request, response) {
 app.post('/party', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
+
+  db.collection('Parties').insertOne(request.body,function(err,result){
+      if (err){
+      //handle error
+        console.log('error on insert party to db');
+          return;
+      }
+
+    var savedParty = result.ops[0];
+    console.log(savedParty);
+  });
+
   //console.log(request.twitterQueryParams.id);
   //console.log(request.body, request.twitterQueryParams.id, 'query');
   response.sendStatus(200);
@@ -112,6 +124,8 @@ function TwitterService(partyName)
     }
 
     console.log(params);  // The favorites.
+
+    console.log(response);  // Raw response object.
 
     //console.log(response);  // Raw response object.
 
