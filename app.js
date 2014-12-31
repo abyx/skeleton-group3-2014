@@ -41,13 +41,47 @@ app.post('/party', function(request, response) {
     var savedParty = result.ops[0];
     console.log(savedParty);
   });
-
-  //console.log(request.twitterQueryParams.id);
-  //console.log(request.body, request.twitterQueryParams.id, 'query');
-  response.sendStatus(200);
 });
 
-app.post('/word', function(request, response) {
+  app.post('/person', function(request, response) {
+    console.log('SERVER post');
+    console.log(request.body);
+
+    db.collection('Parties').findOne({name:request.body.name}, function(err,party){
+
+
+      if (party != null){
+        console.log("got this party from mongo: ", party);
+
+        party.members = party.members || [];
+
+        party.members.push(request.body.person);
+
+        console.log("members after update will be: ", party.members);
+      db.collection('Parties').updateOne({_id:party._id}, {$set: {members: party.members}},function(err,result){
+        if (err){
+          //handle error
+          console.log('error on insert party to db');
+          return;
+        }
+        console.log("updated successfully", result);
+        //var savedParty = result.ops[0];
+        //console.log(savedParty);
+
+      });
+      } else
+      {
+        console.log("failed to get party from mongo");
+      }
+  });
+
+    //console.log(request.twitterQueryParams.id);
+    //console.log(request.body, request.twitterQueryParams.id, 'query');
+    response.sendStatus(200);
+  });
+
+
+  app.post('/word', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
 
@@ -64,6 +98,7 @@ app.post('/word', function(request, response) {
   });
   response.sendStatus(200);
 });
+
 
 mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {
