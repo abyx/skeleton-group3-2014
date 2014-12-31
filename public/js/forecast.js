@@ -79,10 +79,8 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
     // Botton Click
     $scope.buttonClicked = function() {
-
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat) {
-                $scope.data = volatileChart(130.0, 0.02);
                 $scope.dataBar = [
                     {
                         key: "Mandats",
@@ -92,9 +90,22 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
                                 "value": mandat
                             }]
                     }];
-                $scope.visible = true;
+
             }
-        )}
+        )
+
+        statisticSrv.getMandatsNo4PartyGraph($scope.model.text).then(
+
+            function(mandat) {
+                $scope.data = volatileChart(130.0, 0.02);
+
+
+            }
+        )
+        $scope.visible = true;
+
+
+    }
 
 });
 
