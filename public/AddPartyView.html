@@ -8,14 +8,16 @@
             <div class="col-md-4">
             <h3>Parties</h3>
 
-            <span ng-repeat="party    in	parties">
-                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
-                    <lu>
+            <ul ng-repeat="party    in	parties">
+                <li>
+                    <input type="checkbox" value="{{party.name}}" ng-model="party.isChecked">{{party.name}}<br/>
+                    <ul>
                         <li class="LIST-GROUP-ITEM" ng-repeat="member in party.members">
                             {{member}}
                         </li>
-                    </lu>
-            </span>
+                    </ul>
+                </li>
+            </ul>
             </div>
             <!--div class="col-md-4">
 
