@@ -19,6 +19,7 @@ app.get('/parties/', function(request, response) {
       //	handle	error
       return;
     }
+    console.log(completedParties);
     response.send(completedParties);
 
   });
@@ -34,10 +35,26 @@ app.get('/parties/', function(request, response) {
 
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
+  console.log(request.params.id);
 
-  TwitterService(request.params.id);
+  //TwitterService(request.params.id);
+  db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
+    if (err) {
+      console.log('SERVER get parties error');
+      //	handle	error
+      response.sendStatus(200).send();
+      return;
+    }
+    if (completedParties == null || completedParties.length == 0) {
+      response.sendStatus(200).send();
+    }
+    else {
+      console.log(completedParties);
+      console.log(completedParties[0].count);
+      response.send(completedParties[0].count);
+    }
+  });
 
-  response.send('10');
 });
 
 app.post('/party', function(request, response) {
@@ -78,7 +95,7 @@ app.post('/word', function(request, response) {
   response.sendStatus(200);
 });
 
-mongo.connect('mongodb://localhost/app', function(err, aDb) {
+mongo.connect('mongodb://192.168.100.36/app', function(err, aDb) {
   if (err) {
     throw err;
   }
