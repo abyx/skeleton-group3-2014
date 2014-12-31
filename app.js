@@ -6,7 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var db;
+var db ;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -44,6 +44,24 @@ app.post('/party', function(request, response) {
 
   //console.log(request.twitterQueryParams.id);
   //console.log(request.body, request.twitterQueryParams.id, 'query');
+  response.sendStatus(200);
+});
+
+app.post('/word', function(request, response) {
+  console.log('SERVER post');
+  console.log(request.body);
+
+
+  db.collection('Words').insertOne(request.body,	function(err,	result)	{
+    if	(err)	{
+      //	handle	error
+      console.log('error in insert key');
+      return;
+    }
+
+    var	key	=	result.ops[0];
+    console.log(key);
+  });
   response.sendStatus(200);
 });
 
@@ -98,8 +116,10 @@ function TwitterService(partyName)
 
     console.log(response);  // Raw response object.
 
-    console.log('SERVER out TwitterService()');
+    //console.log(response);  // Raw response object.
 
+    console.log('SERVER out TwitterService()');
+//    response.send('10');
   });
 }
 

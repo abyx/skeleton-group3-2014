@@ -20,4 +20,9 @@ angular.module('app').controller('AddPartyViewCtrl', function($scope, AddEntityS
         AddEntityService.addEntity(($scope.model.text));
     };
 
+    $scope.AddWord = function() {
+        AddEntityService.AddWord(($scope.model.text));
+    };
+
+
 });
