@@ -9,5 +9,29 @@ angular.module('app').factory('AddEntityService', function($http) {
                 }
             );
         }
+
+
+
+
     };
 });
+
+
+angular.module('app').factory('AddEntityService', function($http) {
+    return {
+        AddWord: function(WordName) {
+            $http.post('/word/',
+                {request:WordName}).then(
+                function(response)
+                {
+                    console.log('got response',response.data);
+                }
+            );
+        }
+
+
+
+
+    };
+});
+
