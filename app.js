@@ -27,6 +27,23 @@ app.get('/party/:id', function(request, response) {
   response.send('10');
 });
 
+
+app.get('/words/', function(request, response) {
+  console.log('get words');
+
+Q.ninvoke(db.collection('Words').find({}),'toArray').then(
+    function(collection)	{
+
+      console.log('read words', collection);
+      response.send(collection);
+    })
+    .fail(
+    function(err)	{
+      response.send(err);
+      console.log(err);
+    });
+});
+
 app.post('/party', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
@@ -65,14 +82,9 @@ app.post('/word', function(request, response) {
   response.sendStatus(200);
 });
 
-Q.ninvoke(db.collection('Words').find({}),'toArray').then(
-    function(collection)	{
-      console.log('read words', collection);
-    })
-    .fail(
-    function(err)	{
-      consol.log(err);
-    });
+
+
+
 
 
 
@@ -82,6 +94,8 @@ mongo.connect('mongodb://localhost/app', function(err, aDb) {
   }
 
   db = aDb;
+
+
 
   var server = app.listen(3000, function() {
     var host = server.address().address;
