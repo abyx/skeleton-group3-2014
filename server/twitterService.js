@@ -1,6 +1,7 @@
 // module to interface twitter data
 (function()
 {
+	var Q = require('q');
 	var exports = module.exports = {};
 	var Twitter = require('twitter');
 
@@ -15,6 +16,8 @@
 	{
 		console.log('SERVER in getTweetsRelatedTo()');
 
+		var deferred = Q.defer();
+
 		var queryParams =
 		{
 			q: queryString,
@@ -27,14 +30,14 @@
 			if(error)
 			{
 				console.log('twitter error');
-				throw error;
+				deferred.reject(new Error(error));
 			}
 
-			//console.log(tweets);
+			deferred.resolve(tweets);
 			console.log('SERVER out getTweetsRelatedTo()');
-
-			return tweets;
 		});
+
+		return deferred.promise;
 	}
 })();
 
