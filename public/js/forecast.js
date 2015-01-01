@@ -13,6 +13,20 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
         }
     };
 
+    google.earth.createInstance(
+        'map3d', initCB, failureCB);
+    function initCB(instance) {
+        ge = instance;
+        ge.getWindow().setVisibility(true);
+    }
+
+    function failureCB(errorCode) {
+        console.log('GE init')
+    }
+
+
+
+
     //$scope.data = sine();
 
     //$scope.data = volatileChart(25.0, 0.09,30);
@@ -85,19 +99,6 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
     // Botton Click
     $scope.buttonClicked = function() {
 
-        if (ge==null) {
-            google.earth.createInstance(
-                'map3d', initCB, failureCB);
-
-            function initCB(instance) {
-                ge = instance;
-                ge.getWindow().setVisibility(true);
-            }
-
-            function failureCB(errorCode) {
-                console.log('GE init')
-            }
-        }
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat) {
                 $scope.dataBar = [
