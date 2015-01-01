@@ -14,5 +14,13 @@ angular.module('app').config(function($routeProvider) {
       templateUrl: 'forecast.html',
       controller: 'ForecastCtrl'
     })
+      .when('/twitts', {
+        templateUrl: 'twitts.html',
+        controller: 'twittsCtrl'
+      })
+      .when('/pie', {
+        templateUrl: 'pie.html',
+        controller: 'pieCtrl'
+      })
     .otherwise({redirectTo: '/'});
 });
