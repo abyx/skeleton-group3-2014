@@ -13,18 +13,77 @@ app.use(bodyParser.json());
 
 app.get('/parties/', function(request, response) {
   console.log('SERVER get parties');
+  db.collection('Parties').find().toArray(function	(err,	completedParties)	{
+    if	(err)	{
+      console.log('SERVER get parties error');
+      //	handle	error
+      return;
+    }
+    console.log(completedParties);
+    response.send(completedParties);
+
+  });
+
+
+/*
   response.send([
     {name:'ליכוד', members: ['member1','member2','member3']},
     {name: 'עבודה', members: ['member4','member5']}
   ]);
+  */
 });
 
 app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
+  console.log(request.params.id);
 
-  TwitterService(request.params.id);
+  //TwitterService(request.params.id);
+  db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
+    if (err) {
+      console.log('SERVER get parties error');
+      //	handle	error
+      response.sendStatus(200).send();
+      return;
+    }
+    if (completedParties == null || completedParties.length == 0) {
+      response.sendStatus(200).send();
+    }
+    else {
+      console.log(completedParties);
+      var sum = 0;
+      for(var i=0; i< completedParties.length; i++){
+        sum = sum + completedParties[i].count;
+      }
+      //console.log(completedParties[0].count);
+      response.send(sum.toString());
+    }
+  });
 
-  response.send('10');
+});
+
+
+app.get('/partyforgraph/:id', function(request, response) {
+  console.log('SERVER get');
+  console.log(request.params.id);
+
+  //TwitterService(request.params.id);
+  db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
+    if (err) {
+      console.log('SERVER get parties error');
+      //	handle	error
+      response.sendStatus(200).send();
+      return;
+    }
+    if (completedParties == null || completedParties.length == 0) {
+      response.sendStatus(200).send();
+    }
+    else {
+      console.log(completedParties);
+      //console.log(completedParties[0].count);
+      response.send(completedParties);
+    }
+  });
+
 });
 
 
@@ -57,14 +116,48 @@ app.post('/party', function(request, response) {
 
     var savedParty = result.ops[0];
     console.log(savedParty);
-  });
+    response.send(savedParty);
 
-  //console.log(request.twitterQueryParams.id);
-  //console.log(request.body, request.twitterQueryParams.id, 'query');
-  response.sendStatus(200);
+  });
 });
 
-app.post('/word', function(request, response) {
+  app.post('/person', function(request, response) {
+    console.log('SERVER post');
+    console.log(request.body);
+
+    db.collection('Parties').findOne({name:request.body.name}, function(err,party){
+
+
+      if (party != null){
+        console.log("got this party from mongo: ", party);
+
+        party.members = party.members || [];
+
+        party.members.push(request.body.person);
+
+        console.log("members after update will be: ", party.members);
+      db.collection('Parties').updateOne({_id:party._id}, {$set: {members: party.members}},function(err,result){
+        if (err){
+          //handle error
+          console.log('error on insert party to db');
+          return;
+        }
+        response.sendStatus(200);
+        console.log("updated successfully");
+      });
+      } else
+      {
+        console.log("failed to get party from mongo");
+      }
+  });
+
+    //console.log(request.twitterQueryParams.id);
+    //console.log(request.body, request.twitterQueryParams.id, 'query');
+
+  });
+
+
+  app.post('/word', function(request, response) {
   console.log('SERVER post');
   console.log(request.body);
 
@@ -88,7 +181,9 @@ app.post('/word', function(request, response) {
 
 
 
-mongo.connect('mongodb://localhost/app', function(err, aDb) {
+
+
+mongo.connect('mongodb://192.168.100.36/app', function(err, aDb) {
   if (err) {
     throw err;
   }

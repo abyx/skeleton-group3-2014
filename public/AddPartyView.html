@@ -1,47 +1,37 @@
-<div class="row">
+<div class="row" align="left" class="col-md-8">
     <div class="col-md-8">
         <h2>Manage Parties</h2>
         </div>
     </div>
 
-<div class="row">
-            <div class="col-md-4">
+<div class="row" align="left" class="col-md-8">
+                <div class="col-md-4">
             <h3>Parties</h3>
-
-            <span ng-repeat="party    in	parties">
-                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
-                    <lu>
-                        <li class="LIST-GROUP-ITEM" ng-repeat="member in party.members">
-                            {{member}}
-                        </li>
-                    </lu>
-            </span>
+                    <div style="width: 200px;height:200px; overflow-y:scroll">
+                        <ul ng-repeat="party    in	parties">
+                            <li>
+                                <input type="checkbox" value="{{party.name}}" ng-model="party.isChecked">{{party.name}}<br/>
+                                <ul>
+                                    <li class="LIST-GROUP-ITEM" ng-repeat="member in party.members">
+                                        {{member}}
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
             </div>
-            <!--div class="col-md-4">
+            <div class="col-md-4">
 
             <h3>Adjectives</h3>
-
-            <span ng-repeat="party    in	parties">
-                    <input type="checkbox" value="{{party.name}}" check-list='checked_parties'>{{party.name}}<br/>
-            </span>
-            </div-->
+                <div style="width: 200px;height:200px; overflow-y:scroll">
+                <ul ng-repeat="word    in	words">
+                    <li>{{word.word}}</li>
+                </ul>
+                    </div>
+            </div>
 </div>
 <br/>
-<div class="row">
-        <!--fieldset>
-        <input ng-model="model.radioValue" type="radio" name="EntityRadio" value="Party" checked/>
-        <label>Add Party</label> <br/>
-
-        <input ng-model="model.radioValue" type="radio" id="radioPerson" name="EntityRadio" value="Person" />
-        <label>Add Person to Party</label> <br/>
-
-        <input ng-model="model.radioValue" type="radio" id="radioPW" name="EntityRadio" value="PW" />
-        <label>Add Positive Word</label>
-
-        <br/><br/>
-
-
-        </fieldset-->
+<div class="row" align="left" class="col-md-8">
 
     <input type="text" ng-model="model.text">
     <br/><br/>

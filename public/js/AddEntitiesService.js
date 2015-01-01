@@ -1,24 +1,18 @@
 angular.module('app').factory('AddEntityService', function($http) {
     return {
         addEntity: function(PartyName) {
-            $http.post('/party/',
-                {name:PartyName}).then(
+            return $http.post('/party/',{name:PartyName});
+        },
+        addPerson: function(PartyName, PersonName) {
+            console.log({name:PartyName, person:PersonName});
+            $http.post('/person/',
+                {name:PartyName, person:PersonName}).then(
                 function(response)
                 {
                     console.log('got response',response.data);
                 }
             );
-        }
-
-
-
-
-    };
-});
-
-
-angular.module('app').factory('AddEntityService', function($http) {
-    return {
+        },
         AddWord: function(WordName) {
             $http.post('/word/',
                 {word:WordName}).then(
@@ -27,11 +21,6 @@ angular.module('app').factory('AddEntityService', function($http) {
                     console.log('got response',response.data);
                 }
             );
-        }
-
-
-
-
-    };
+        }}
 });
 

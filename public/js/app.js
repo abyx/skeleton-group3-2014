@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute','nvd3']);
+angular.module('app', ['ngRoute','nvd3','ngScrollbar']);
 
 angular.module('app').config(function($routeProvider) {
   $routeProvider
