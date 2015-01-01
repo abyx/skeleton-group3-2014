@@ -25,31 +25,31 @@ angular.module('app').controller('pieCtrl', function($scope,statisticSrv) {
 
     $scope.data = [
         {
-            key: "Avoda",
+            key: "עבודה",
             y: 20
         },
         {
-            key: "Licud",
+            key: "ליכוד",
             y: 30
         },
         {
-            key: "Meretz",
+            key: "מרצ",
             y: 10
         },
         {
-            key: "Hadash",
+            key: "חדש",
             y: 5
         },
         {
-            key: "Yesh Atid",
+            key: "יש עתיד",
             y: 10
         },
         {
-            key: "Seniors",
+            key: "הגמלאים",
             y: 5
         },
         {
-            key: "Ale Yarok",
+            key: "עלה ירוק",
             y: 20
         }
     ];
