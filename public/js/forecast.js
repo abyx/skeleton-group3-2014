@@ -4,7 +4,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
     $scope.options = {
         chart: {
             type: 'sparklinePlus',
-            height: 450,
+            height: 300,
             x: function(d, i){return i;},
             xTickFormat: function(d) {
                 return d3.time.format('%x')(new Date($scope.data[d].x))
@@ -53,7 +53,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
     $scope.optionsBar = {
         chart: {
             type: 'discreteBarChart',
-            height: 450,
+            height: 300,
             margin : {
                 top: 20,
                 right: 20,
@@ -77,9 +77,24 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
         }
     };
 
+
+
     // Botton Click
     $scope.buttonClicked = function() {
 
+        if (ge==null) {
+            google.earth.createInstance(
+                'map3d', initCB, failureCB);
+
+            function initCB(instance) {
+                ge = instance;
+                ge.getWindow().setVisibility(true);
+            }
+
+            function failureCB(errorCode) {
+                console.log('GE init')
+            }
+        }
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat) {
                 $scope.data = volatileChart(130.0, 0.02);
@@ -96,7 +111,10 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
             }
         )}
 
+
+
 });
+
 
 
 
