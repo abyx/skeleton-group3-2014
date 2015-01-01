@@ -53,7 +53,8 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
         for(var i = 0; i < tweets.length; i++) {
             //var now =tweets[i].time;
-            rval.push({x: tweets[i].time+i, y: tweets[i].count});
+            //rval.push({x: tweets[i].time+i, y: tweets[i].count});
+            rval.push({x: "12/" + (i+22) + "/2014", y: tweets[i].count});
             /*
             rval.push({x: now + i * 1000 * 60 * 60 * 24, y: startPrice});
             var rnd = tweets[i].count;

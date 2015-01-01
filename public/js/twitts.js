@@ -37,9 +37,12 @@ angular.module('app').controller('twittsCtrl', function($scope,statisticSrv) {
         var rval =  [];
 
 
-        for(var i = 0; i < tweets.length; i++) {
-            var now =tweets[i].time;
-            rval.push({x: now + i * 1000 * 60 * 60 * 24, y: startPrice});
+        //for(var i = 0; i < tweets.length; i++) {
+        for(var i = 0; i < 10; i++) {
+            debugger;
+
+            rval.push({x: "12/" + (i+22) + "/2014", y: startPrice});
+
             var rnd = tweets[i].count;
             var changePct = 2 * volatility * rnd;
             if ( changePct > volatility) {
