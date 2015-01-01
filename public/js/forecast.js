@@ -13,15 +13,23 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
         }
     };
 
-    google.earth.createInstance(
-        'map3d', initCB, failureCB);
+
+    var ge;
+    google.earth.createInstance('map3d', initCB, failureCB);
+
     function initCB(instance) {
         ge = instance;
+        google.earth.fetchKml(ge,'http://localhost:3000/cities.kml', getKML);
         ge.getWindow().setVisibility(true);
     }
 
     function failureCB(errorCode) {
         console.log('GE init')
+    }
+    function getKML(kmlObject){
+        if (kmlObject) {
+            ge.getFeatures().appendChild(kmlObject);
+        }
     }
 
 
