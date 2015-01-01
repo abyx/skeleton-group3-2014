@@ -55,7 +55,7 @@ app.get('/party/:id', function(request, response) {
         sum = sum + completedParties[i].count;
       }
       //console.log(completedParties[0].count);
-      response.send(sum.toString());
+      response.send((sum/completedParties.length).toString());
     }
   });
 
