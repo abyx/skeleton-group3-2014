@@ -20,6 +20,7 @@ app.get('/parties/', function(request, response) {
       return;
     }
     console.log(completedParties);
+
     response.send(completedParties);
 
   });
@@ -37,7 +38,7 @@ app.get('/party/:id', function(request, response) {
   console.log('SERVER get');
   console.log(request.params.id);
 
-  //TwitterService(request.params.id);
+
   db.collection('Twitts').find({partyname:request.params.id}).toArray(function	(err,	completedParties) {
     if (err) {
       console.log('SERVER get parties error');
@@ -63,6 +64,7 @@ app.get('/party/:id', function(request, response) {
 
 
 app.get('/partyforgraph/:id', function(request, response) {
+
   console.log('SERVER get');
   console.log(request.params.id);
 
@@ -115,6 +117,7 @@ app.post('/party', function(request, response) {
       }
 
     var savedParty = result.ops[0];
+    TwitterService(savedParty);
     console.log(savedParty);
     response.send(savedParty);
 
@@ -214,33 +217,52 @@ var twitterClient = new Twitter({
 var twitterQueryParams =
 {
   q: 'github.com/',
-  //since: datestring(),
-  result_type: 'mixed'
+  since:'2014-01-01' ,
+  until:'2015-01-01' ,
+  result_type: 'mixed',
+  count : 100
 };
 
-function TwitterService(partyName)
+function TwitterService(party)
 {
   console.log('SERVER in TwitterService()');
+for (var i = 0 ; i< 10 ; i++) {
+  twitterQueryParams.q = party.name;
+  var d = new Date();
+  var curr_date = 20+i;
+  var curr_date2 = 19+i;
+  var curr_month = '12'; //Months are zero based
+  var curr_year = '2014';
+  twitterQueryParams.since = curr_year  + "-" + curr_month + "-" + curr_date2;
+  twitterQueryParams.until = curr_year  + "-" + curr_month + "-" + curr_date;
 
-  twitterQueryParams.q = partyName;
+  twitterClient.get('search/tweets', twitterQueryParams, function (error, params, response) {
 
-  twitterClient.get('search/tweets', twitterQueryParams, function(error, params, response){
-
-    if(error)
-    {
+    if (error) {
       console.log('twitter error');
       throw error;
     }
 
-    console.log(params);  // The favorites.
 
-    console.log(response);  // Raw response object.
+    db.collection('Twitts').insertOne({
+      time:  '01-12-2014',
+      partyname: twitterQueryParams.q,
+      count: params.statuses.length
+    }, function (err, result) {
+      if (err) {
+        //handle error
+        console.log('error on insert Twitts to db');
+        return;
+      }
 
-    //console.log(response);  // Raw response object.
+      var savedParty = result.ops[0];
+      console.log(savedParty);
 
-    console.log('SERVER out TwitterService()');
-//    response.send('10');
-  });
+
+    });
+  })
+}
+
 }
 
 
