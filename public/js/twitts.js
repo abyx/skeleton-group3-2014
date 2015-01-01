@@ -1,10 +1,10 @@
-angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
+angular.module('app').controller('twittsCtrl', function($scope,statisticSrv) {
 
     //LineGraph
     $scope.options = {
         chart: {
             type: 'sparklinePlus',
-            height: 300,
+            height: 450,
             x: function(d, i){return i;},
             xTickFormat: function(d) {
                 return d3.time.format('%x')(new Date($scope.data[d].x))
@@ -12,20 +12,6 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
             transitionDuration: 250
         }
     };
-
-    google.earth.createInstance(
-        'map3d', initCB, failureCB);
-    function initCB(instance) {
-        ge = instance;
-        ge.getWindow().setVisibility(true);
-    }
-
-    function failureCB(errorCode) {
-        console.log('GE init')
-    }
-
-
-
 
     //$scope.data = sine();
 
@@ -52,9 +38,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
 
         for(var i = 0; i < tweets.length; i++) {
-            //var now =tweets[i].time;
-            rval.push({x: tweets[i].time+i, y: tweets[i].count});
-            /*
+            var now =tweets[i].time;
             rval.push({x: now + i * 1000 * 60 * 60 * 24, y: startPrice});
             var rnd = tweets[i].count;
             var changePct = 2 * volatility * rnd;
@@ -62,7 +46,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
                 changePct -= (2*volatility);
             }
 
-            startPrice = startPrice + startPrice * changePct;*/
+            startPrice = startPrice + startPrice * changePct;
         }
         return rval;
     }
@@ -72,7 +56,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
     $scope.optionsBar = {
         chart: {
             type: 'discreteBarChart',
-            height: 300,
+            height: 450,
             margin : {
                 top: 20,
                 right: 20,
@@ -96,11 +80,8 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
         }
     };
 
-
-
     // Botton Click
     $scope.buttonClicked = function() {
-
         statisticSrv.getMandatsNo4Party($scope.model.text).then(
             function(mandat) {
                 $scope.dataBar = [
@@ -129,10 +110,7 @@ angular.module('app').controller('ForecastCtrl', function($scope,statisticSrv) {
 
     }
 
-
-
 });
-
 
 
 

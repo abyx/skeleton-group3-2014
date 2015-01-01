@@ -174,8 +174,8 @@ app.post('/party', function(request, response) {
 
     var	key	=	result.ops[0];
     console.log(key);
+    response.sendStatus(key);
   });
-  response.sendStatus(200);
 });
 
 

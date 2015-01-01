@@ -20,17 +20,20 @@
         <script src="js/StatisticSrv.js"></script>
         <script src="js/PartiesSrv.js"></script>
         <script src="js/WordsSrv.js"></script>
+        <script src="js/pie.js"></script>
+        <script src="js/twitts.js"></script>
 
         <!--nvd3-->
         <link rel="stylesheet" href="https://rawgit.com/novus/nvd3/master/nv.d3.min.css"/>
         <script src="https://rawgit.com/mbostock/d3/master/d3.min.js"></script>
         <script src="https://rawgit.com/novus/nvd3/master/nv.d3.min.js"></script>
         <script src="https://rawgit.com/krispo/angular-nvd3/master/dist/angular-nvd3.js"></script>
-
-        <!--Scrollbar-->
-        <script src="js/ng-scrollbar.js"></script>
-        <link rel="stylesheet" href="/css/ng-scrollbar.css">
-
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            var ge;
+            google.load("earth", "1",
+                    {"other_params": "sensor=false"});
+        </script>
     </head>
 
 
@@ -44,7 +47,9 @@
                         <li><a href="#/"><img src="img/logoSmall.jpg"></a></li>
                         <li><a href="#/">Home</a></li>
                         <li><a href="#/AddPartyView">Manage</a></li>
-                        <li><a href="#/forecast">Forecast</a></li>
+                        <li><a href="#/twitts">Twitts</a></li>
+                        <li><a href="#/forecast">Party Forecast</a></li>
+                        <li><a href="#/pie">Full Forecast</a></li>
                     </ul>
                 </nav>
             </div>
