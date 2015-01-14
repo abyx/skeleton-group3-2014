@@ -186,7 +186,7 @@ app.post('/party', function(request, response) {
 
 
 
-mongo.connect('mongodb://192.168.100.36/app', function(err, aDb) {
+mongo.connect('mongodb://localhost/app', function(err, aDb) {
   if (err) {
     throw err;
   }
